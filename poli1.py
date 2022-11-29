@@ -1,3 +1,6 @@
+from numbers import Number
+
+
 def printfile(file):
     try:
         contents = file.read()
@@ -29,3 +32,22 @@ class Matrix:
             [a + b for a, b in zip(a_row, b_row)]
             for a_row, b_row in zip(self.rows, other.rows)
         ])
+
+    def __sub__(self, other):
+        if (
+                len(self.rows) != len(other.rows) or
+                len(self.rows[0]) != len(other.rows[0])
+        ):
+            raise ValueError("Macierze mają niezgodne wymiary")
+        return Matrix([
+            [a - b for a, b in zip(a_row, b_row)]
+            for a_row, b_row in zip(self.rows, other.rows)
+        ])
+
+    def __mul__(self, other):
+        if isinstance(other, Matrix):
+            print()
+        elif isinstance(other, Number):
+            print()
+        else:
+            raise TypeError(f"Nie można pomnożyć typów {type(other)} i Matrix")
