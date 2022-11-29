@@ -22,3 +22,24 @@ class RevealAccess(object):
 class MyClass(object):
     x = RevealAccess(10, 'var "x"')
     y = 5
+
+
+m = MyClass()
+# print(m.x)
+m.x = 20
+del m.x
+m.y = 14
+del m.y
+print(m.y)
+print(m.x)
+
+
+def fun():
+    pass
+
+
+print(hasattr(fun, '__get__'))
+print(hasattr(fun, '__set__'))
+print(hasattr(lambda: None, '__get__'))
+print(hasattr(lambda: None, '__set__'))
+
