@@ -1,5 +1,5 @@
 from collections import UserDict
-from typing import Any
+from typing import Any, List
 
 
 class CaseInsesitiveDict(UserDict):
@@ -22,21 +22,21 @@ class CaseInsesitiveDict(UserDict):
 # print(headers["Content-Length"])
 # print(headers["Content-length"])
 
-class CommonBase:
-    pass
-
-
-class Base1(CommonBase):
-    pass
-
-
-class Base2(CommonBase):
-    def method(self):
-        print("Wywołanie Base2")
-
-
-class MyClass(Base1, Base2):
-    pass
+# class CommonBase:
+#     pass
+#
+#
+# class Base1(CommonBase):
+#     pass
+#
+#
+# class Base2(CommonBase):
+#     def method(self):
+#         print("Wywołanie Base2")
+#
+#
+# class MyClass(Base1, Base2):
+#     pass
 
 
 # k1 = MyClass()
@@ -62,7 +62,19 @@ class Point:
 #         self.last_aggregated = value
 #         self.all_aggregated.append(value)
 
+# class Aggregator:
+#
+#     def __init__(self):
+#         self.all_aggregated = []
+#         self.last_aggregated = None
+#
+#     def aggregate(self, value):
+#         self.last_aggregated = value
+#         self.all_aggregated.append(value)
+
 class Aggregator:
+    all_aggregated = List[Any]
+    last_aggregated = Any
 
     def __init__(self):
         self.all_aggregated = []
@@ -85,3 +97,16 @@ print(a1.last_aggregated)
 print(a2.last_aggregated)
 # print(Aggregator.all_aggregated)
 # print(Aggregator.last_aggregated)
+
+class MyClass:
+    def __init__(self):
+        self.__secret_value = 1
+
+class MyClass2(MyClass):
+    pass
+
+
+
+
+# instance_of = MyClass()
+# print(instance_of.__secret_value)
