@@ -23,6 +23,28 @@ class WithSortedRandoms:
         [random.random() for _ in range(5)]
     )
 
+
+class lazy_property():
+    def __init__(self, function):
+        self.fget = function
+
+    def __get__(self, obj, cls):
+        value = self.fget(obj)
+        setattr(obj, self.fget.__name__, value)
+        return value
+
+
+class WithSortedRandoms2:
+    @lazy_property
+    def lazily_initialized(self):
+        return sorted([random.random() for _ in range(5)])
+
+
 m = WithSortedRandoms()
+m2 = WithSortedRandoms2()
+
 print(m.lazily_initialized)
 print(m.lazily_initialized)
+print()
+print(m2.lazily_initialized)
+print(m2.lazily_initialized)
