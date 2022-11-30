@@ -1,4 +1,5 @@
 from collections.abc import MutableMapping
+from typing import Dict
 
 names = {
     'kot': 'mruczek',
@@ -23,25 +24,34 @@ votes = {
 }
 
 
-def populate_ranks(votes, ranks):
+# def populate_ranks(votes, ranks):
+#     names = list(votes.keys())
+#     names.sort(key=votes.get, reverse=True)
+#     for i, name in enumerate(names, 1):
+#         ranks[name] = i
+
+def populate_ranks(votes: Dict[str, int], ranks: Dict[str, int]) -> None:
     names = list(votes.keys())
     names.sort(key=votes.get, reverse=True)
     for i, name in enumerate(names, 1):
         ranks[name] = i
 
 
-def get_winner(ranks):
+# def get_winner(ranks):
+#     for name, rank in ranks.items():
+#         if rank == 1:
+#             return name
+
+# def get_winner(ranks):
+#     if not isinstance(ranks, dict):
+#         raise TypeError('Wymagane jest użycie typu dict')
+#     return next(iter(ranks))
+
+def get_winner(ranks: Dict[str, int]) -> str:
     return next(iter(ranks))
 
 
-ranks = {}
-populate_ranks(votes, ranks)
-print(ranks)
-winner = get_winner(ranks)
-print(winner)
-
-
-class SortedDict(MutableMapping):
+class SortedDict(MutableMapping[str, int]):
     def __init__(self):
         self.data = {}
 
@@ -62,3 +72,10 @@ class SortedDict(MutableMapping):
 
     def __len__(self):
         return len(self.data)
+
+
+sorted_ranks = SortedDict()
+populate_ranks(votes, sorted_ranks)
+print(sorted_ranks.data)
+winner = get_winner(sorted_ranks)
+print(winner)
