@@ -16,23 +16,21 @@ tools = [Tool('młotek', 3.5),
          Tool('piła tarczowa', 40),
          Tool('dłuto', 0.25),
          Tool('poziomica', 3),
+         Tool('szlifierka', 3),
          ]
 saw = (5, 'piła tarczowa')
 hammer = (40, 'młot')
 drill = (5, 'wiertarka')
-assert not (hammer < saw)
-assert drill[0] == saw[0]
-assert drill[1] < saw[1]
-assert drill < saw
-
-
-
-
+# assert not (hammer < saw)
+# assert drill[0] == saw[0]
+# assert drill[1] < saw[1]
+# assert drill < saw
 
 
 print('nieposortowane', repr(tools))
 tools.sort(key=lambda x: x.name)
-tools.sort(key=lambda x: x.weight)
+tools.sort(key=lambda x: x.weight, reverse=True)
+# tools.sort(key=lambda x: (-x.weight, x.name))
 print('posortowane', tools)
 
 # places = ['dom', 'praca', 'Nowy Jork', 'Paryż']
