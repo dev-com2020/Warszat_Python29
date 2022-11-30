@@ -1,0 +1,1 @@
+Poetry nie jest po prostu menadżerem paczek, to uniwersalne narzędzie, z którego poziomu możemy zarządzać zależnościami, wersjami Pythona, budową oraz publikacją paczek. 
