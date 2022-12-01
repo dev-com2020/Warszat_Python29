@@ -10,4 +10,13 @@ class Gradebook:
 
     def average_grade(self, name):
         grades = self._grades[name]
-        return sum(grades / len(grades))
+        return sum(grades) / len(grades)
+
+
+book = Gradebook()
+book.add_student('Tomasz Kaniecki')
+book.report_grade('Tomasz Kaniecki', 90)
+book.report_grade('Tomasz Kaniecki', 95)
+book.report_grade('Tomasz Kaniecki', 75)
+
+print(book.average_grade('Tomasz Kaniecki'))
