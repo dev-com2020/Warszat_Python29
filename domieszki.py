@@ -89,3 +89,4 @@ serialized = """{
 {"cores": 4, "ram": 16e9, "disk": 1e12},
 {"cores": 2, "ram": 4e9, "disk": 500e9}]
 }"""
+
