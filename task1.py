@@ -22,7 +22,7 @@ if __name__ == '__main__':
     if args.config:
         # config = configparser.ConfigParser()
         config = yaml.load(args.config, Loader=yaml.FullLoader)
-        config.read_file(args.config)
+        # config.read_file(args.config)
         # args.n1 = int(config['ARGUMENTS']['n1'])
         # args.n2 = int(config['ARGUMENTS']['n2'])
         args.n1 = config['ARGUMENTS']['n1']
