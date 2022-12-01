@@ -109,6 +109,7 @@ def write_test_files(tmpdir):
 
 
 tmpdir = 'test_inputs'
+write_test_files(tmpdir)
 config = {'data_dir': tmpdir}
 result = mapreduce(LineCountWorker, PathInputData, config)
 print(f'Znaleziono {result} wierszy')
