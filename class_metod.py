@@ -1,4 +1,5 @@
 import os
+import random
 from threading import Thread
 
 
@@ -7,7 +8,35 @@ class InputData:
         raise NotImplementedError
 
 
-class PathInputData(InputData):
+class GenericInputData:
+    def read(self):
+        raise NotImplementedError
+
+    @classmethod
+    def generate_inputs(cls, config):
+        raise NotImplementedError
+
+
+class GenericWorker:
+    def __init__(self, input_data):
+        self.input_data = input_data
+        self.result = None
+
+    def map(self):
+        raise NotImplementedError
+
+    def reduce(self, other):
+        raise NotImplementedError
+
+    @classmethod
+    def create_workers(cls, input_class, config):
+        workers = []
+        for input_data in input_class.generate_inputs(config):
+            workers.append(cls(input_data))
+        return workers
+
+
+class PathInputData(GenericInputData):
     def __init__(self, path):
         super().__init__()
         self.path = path
@@ -15,6 +44,12 @@ class PathInputData(InputData):
     def read(self):
         with open(self.path) as f:
             return f.read()
+
+    @classmethod
+    def generate_inputs(cls, config):
+        data_dir = config['data_dir']
+        for name in os.listdir(data_dir):
+            yield cls(os.path.join(data_dir, name))
 
 
 class Worker:
@@ -29,7 +64,7 @@ class Worker:
         raise NotImplementedError
 
 
-class LineCountWorker(Worker):
+class LineCountWorker(GenericWorker):
     def map(self):
         data = self.input_data.read()
         self.result = data.count('\n')
@@ -60,7 +95,20 @@ def execute(workers):
         first.reduce(worker)
     return first.result
 
-def mapreduce(data_dir):
-    inputs = generate_inputs(data_dir)
-    workers = create_workers(inputs)
+
+def mapreduce(workers_class, input_class, config):
+    workers = workers_class.create_workers(input_class, config)
     return execute(workers)
+
+
+def write_test_files(tmpdir):
+    os.makedirs(tmpdir)
+    for i in range(10):
+        with open(os.path.join(tmpdir, str(i)), "w") as f:
+            f.write("\n" * random.randint(0, 100))
+
+
+tmpdir = 'test_inputs'
+config = {'data_dir': tmpdir}
+result = mapreduce(LineCountWorker, PathInputData, config)
+print(f'Znaleziono {result} wierszy')
