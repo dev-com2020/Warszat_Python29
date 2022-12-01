@@ -42,7 +42,17 @@ class Student:
         return total / count
 
 
-# book = Gradebook()
+book = Gradebook()
+
+tomek = book.student('Tomasz Kaniecki')
+tomek.report_grade(80, 0.10)
+tomek.report_grade(75, 0.05)
+tomek.report_grade(65, 0.15)
+print(tomek.average_grade())
+
+
+
+
 # book.add_student('Tomasz Kaniecki')
 # book.report_grade('Tomasz Kaniecki', 'informatyka', 90, 0.05)
 # book.report_grade('Tomasz Kaniecki', 'WF', 95, 0.15)
@@ -51,10 +61,10 @@ class Student:
 # print(book.average_grade('Tomasz Kaniecki'))
 
 
-grades = []
-grades.append((95, 0.45, "Great job"))
-grades.append((85, 0.55, "Będzie lepiej..."))
-total = sum(score * weight for score, weight, _ in grades)
-total_weight = sum(weight for _, weight, _ in grades)
-average_grade = total / total_weight
-print(average_grade)
+# grades = []
+# grades.append((95, 0.45, "Great job"))
+# grades.append((85, 0.55, "Będzie lepiej..."))
+# total = sum(score * weight for score, weight, _ in grades)
+# total_weight = sum(weight for _, weight, _ in grades)
+# average_grade = total / total_weight
+# print(average_grade)
