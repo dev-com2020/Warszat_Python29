@@ -32,7 +32,50 @@ class AnotherWay(MyBaseClass, PlusFive, TimesTwo):
         PlusFive.__init__(self)
 
 
+class TimesSeven(MyBaseClass):
+    def __init__(self, value):
+        MyBaseClass.__init__(self, value)
+        self.value *= 7
+
+
+class PlusNine(MyBaseClass):
+    def __init__(self, value):
+        MyBaseClass.__init__(self, value)
+        self.value += 9
+
+
+class ThisWay(TimesSeven, PlusNine):
+    def __init__(self, value):
+        TimesSeven.__init__(self, value)
+        PlusNine.__init__(self, value)
+
+
+class TimesSevenCorrect(MyBaseClass):
+    def __init__(self, value):
+        super().__init__(value)
+        self.value *= 7
+
+
+class PlusNineCorrect(MyBaseClass):
+    def __init__(self, value):
+        super().__init__(value)
+        self.value += 9
+
+
+class GoodWay(TimesSevenCorrect, PlusNineCorrect):
+    def __init__(self, value):
+        super().__init__(value)
+
+
+k3 = ThisWay(5)
+print("Powinno być (5 * 7) + 9 = 44, ale jest ", k3.value)
+k4 = GoodWay(5)
+print("Powinno być 7 * (5 + 9) = 98 i jest ", k4.value)
+
 k1 = OneWay(5)
 print('Jedna z możliwych koleności działań to (5 * 2) + 5 = ', k1.value)
 k2 = AnotherWay(5)
 print('Jedna z możliwych koleności działań to (5 * 2) + 5 = ', k2.value)
+
+mro_str = '\n'.join(repr(cls) for cls in GoodWay.mro())
+print(mro_str)
