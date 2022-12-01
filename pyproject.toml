@@ -11,6 +11,7 @@ flask = "^2.2.2"
 pytest = "^5.2"
 tzdata = "^2022.6"
 pyyaml = "^6.0"
+fpdf2 = "^2.6.0"
 
 
 [build-system]

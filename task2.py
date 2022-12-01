@@ -31,7 +31,7 @@ if __name__ == '__main__':
     try:
         main(args.n1, args.n2, args.output)
     except Exception as e:
-        logging.exception("Bła w czasie wykonania zadania")
+        logging.exception("Błąd w czasie wykonania zadania")
         exit(1)
 
     # if args.config:
