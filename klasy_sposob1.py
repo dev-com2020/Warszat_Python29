@@ -1,37 +1,60 @@
-from collections import defaultdict
+from collections import defaultdict, namedtuple
 
 
 class Gradebook:
     def __init__(self):
-        self._grades = {}
+        self._students = defaultdict(Subject)
 
-    def add_student(self, name):
-        self._grades[name] = defaultdict(list)
-
-    def report_grade(self, name, subject, score, weight):
-        by_subject = self._grades[name]
-        grade_list = by_subject[subject]
-        grade_list.append((score, weight))
-
-    def average_grade(self, name):
-        by_subject = self._grades[name]
-
-        score_sum, score_count = 0, 0
-        for subject, scores in by_subject.items():
-            subject_avg, total_weight = 0, 0
-            for score, weight in scores:
-                subject_avg += score * weight
-                total_weight += weight
-
-        score_sum += subject_avg / total_weight
-        score_count += 1
-        return score_sum / score_count
+    def student(self, name):
+        return self._students[name]
 
 
-book = Gradebook()
-book.add_student('Tomasz Kaniecki')
-book.report_grade('Tomasz Kaniecki', 'informatyka', 90, 0.05)
-book.report_grade('Tomasz Kaniecki', 'WF', 95, 0.15)
-book.report_grade('Tomasz Kaniecki', 'angielski', 75, 0.60)
+Grade = namedtuple('Grade', ('score', 'weight'))
 
-print(book.average_grade('Tomasz Kaniecki'))
+
+class Subject:
+    def __init__(self):
+        self._grades = []
+
+    def report_grade(self, score, weight):
+        self._grades.append(Grade(score, weight))
+
+    def average_grade(self):
+        total, total_weight = 0, 0
+        for grade in self._grades:
+            total += grade.score * grade.weight
+            total_weight += grade.weight
+        return total / total_weight
+
+
+class Student:
+    def __init__(self):
+        self._subjects = defaultdict(Subject)
+
+    def get_subject(self, name):
+        return self._subjects[name]
+
+    def average_grade(self):
+        total, count = 0, 0
+        for subject in self._subjects.values():
+            total += subject.average_grade()
+            count += 1
+        return total / count
+
+
+# book = Gradebook()
+# book.add_student('Tomasz Kaniecki')
+# book.report_grade('Tomasz Kaniecki', 'informatyka', 90, 0.05)
+# book.report_grade('Tomasz Kaniecki', 'WF', 95, 0.15)
+# book.report_grade('Tomasz Kaniecki', 'angielski', 75, 0.60)
+#
+# print(book.average_grade('Tomasz Kaniecki'))
+
+
+grades = []
+grades.append((95, 0.45, "Great job"))
+grades.append((85, 0.55, "Będzie lepiej..."))
+total = sum(score * weight for score, weight, _ in grades)
+total_weight = sum(weight for _, weight, _ in grades)
+average_grade = total / total_weight
+print(average_grade)
