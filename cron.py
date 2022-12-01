@@ -13,7 +13,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument('--config', '-c', type=argparse.FileType('r'), help='Plik konfiguracyjny', default='automate.ini')
-    parser.add_argument('-o', dest='output', type=argparse.FileType('w'), help='Plik na dane wyjściowe',
+    parser.add_argument('-o', dest='output', type=argparse.FileType('a'), help='Plik na dane wyjściowe',
                         default=sys.stdout)
 
     args = parser.parse_args()
