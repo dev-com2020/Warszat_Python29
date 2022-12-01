@@ -28,6 +28,23 @@ class BinaryTree(ToDictMixin):
         self.right = right
 
 
+class BinaryTreeWithParent(BinaryTree):
+    def __init__(self, value, left=None, right=None, parent=None):
+        super().__init__(value, left=left, right=right)
+        self.parent = parent
+
+    def _traverse(self, key, value):
+        if (isinstance(value, BinaryTreeWithParent) and
+                key == 'parent'):
+            return value.value
+        else:
+            return super()._traverse(key, value)
+
+
 tree = BinaryTree(10, left=BinaryTree(7, right=BinaryTree(9)),
                   right=BinaryTree(13, left=BinaryTree(11)))
 print(tree.to_dict())
+root = BinaryTreeWithParent(10)
+root.left = BinaryTreeWithParent(7, parent=root)
+root.left.right = BinaryTreeWithParent(9, parent=root.left)
+print(root.to_dict())
