@@ -1,11 +1,5 @@
 from collections import defaultdict
 
-
-def log_missing():
-    print('klucz został dodany')
-    return 0
-
-
 current = {'zielony': 12, 'niebieski': 3}
 increments = [
     ('czerwony', 5),
@@ -13,8 +7,50 @@ increments = [
     ('pomarańczowy', 9),
 ]
 
-result = defaultdict(log_missing, current)
-print('Przed:', dict(result))
+
+def increment_with_report(current, increments):
+    added_count = 0
+
+    def missing():
+        nonlocal added_count
+        added_count += 1
+        return 0
+
+    result = defaultdict(missing, current)
+    for key, amount in increments:
+        result[key] += amount
+
+    return result, added_count
+
+
+class CountMissing:
+    def __init__(self):
+        self.added = 0
+
+    def missing(self):
+        self.added += 1
+        return 0
+
+class BetterCountMissing:
+    def __init__(self):
+        self.added = 0
+
+    def __call__(self):
+        self.added += 1
+        return 0
+
+# counter = CountMissing()
+# result = defaultdict(counter.missing, current)
+# for key, amount in increments:
+#     result[key] += amount
+# assert counter.added == 2
+
+counter = BetterCountMissing()
+result = defaultdict(counter, current)
 for key, amount in increments:
     result[key] += amount
-print('Po:', dict(result))
+assert counter.added == 2
+
+
+# result, count = increment_with_report(current, increments)
+# assert count == 2
