@@ -8,13 +8,13 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 flask = "^2.2.2"
-pytest = "^5.2"
 tzdata = "^2022.6"
 pyyaml = "^6.0"
 fpdf2 = "^2.6.0"
 pypdf2 = "^2.11.2"
 pdf2image = "^1.16.0"
 pandas = "^1.5.2"
+objgraph = "^3.5.0"
 
 
 [build-system]
